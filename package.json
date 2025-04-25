@@ -1,0 +1,27 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "description": "Full-stack project with frontend and backend",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "concurrently \"npm run start\" \"npm run serve-frontend\"",
+    "serve-frontend": "serve frontend",
+    "build": "npm install && cd frontend && npm install && npm run build",
+    "render-build": "npm install && npm run build"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.12",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "serve": "^13.0.2",
+    "concurrently": "^6.4.0",
+    "dotenv": "^16.0.3",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

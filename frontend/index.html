@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vision Education Centre</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* أنماط عامة */
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #1a1a1a;
+      color: white;
+      padding: 20px;
+      margin: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(0, 242, 254, 0.1) 0%, transparent 30%),
+                  radial-gradient(circle at 80% 70%, rgba(79, 172, 254, 0.1) 0%, transparent 30%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+  .voltage-header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline; /* محاذاة حسب قاعدة الحروف */
+  position: relative;
+  margin: 10px auto;
+  width: fit-content;
+  direction: ltr;
+  line-height: 1; /* منع أي تباعد غير مرغوب */
+}
+
+.volt-en {
+  font-family: 'Arial', sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  order: 2;
+}
+
+.volt-ar {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  order: 1;
+  margin-left: 5px;
+  padding-top: 0.2rem; /* تعديل دقيق للمحاذاة الرأسية */
+}
+
+.voltage-ar-above {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(calc(-50% + 15px));
+  font-size: 1.2rem;
+  color: #00f2fe;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: bold;
+}
+
+/* تحسينات للجوال */
+@media (max-width: 768px) {
+  .voltage-header {
+    margin: 5px auto;
+  }
+  
+  .volt-en, .volt-ar {
+    font-size: 1.8rem;
+    padding-top: 0.1rem;
+  }
+  
+  .voltage-ar-above {
+    font-size: 0.9rem;
+    top: -10px;
+    transform: translateX(calc(-50% + 10px));
+  }
+  
+  .teacher-link {
+    font-size: 1rem;
+    padding: 6px 12px;
+  }
+}
+
+    .site-footer {
+    margin-top: 50px;
+    background: rgba(30, 30, 30, 0.8);
+    border-top: 1px solid rgba(0, 242, 254, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 10% 10%, rgba(0, 242, 254, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 90%, rgba(79, 172, 254, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .copyright {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+  }
+  
+  .copyright p {
+    margin: 5px 0;
+  }
+  
+  .dev-name {
+    color: #00f2fe;
+    font-weight: bold;
+  }
+  
+  .footer-buttons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .footer-btn {
+    color: white;
+    background: rgba(0, 242, 254, 0.1);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .footer-btn:hover {
+    background: rgba(0, 242, 254, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 242, 254, 0.2);
+  }
+  
+  /* تحسينات للجوال */
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .copyright {
+      order: 2;
+    }
+    
+    .footer-buttons {
+      order: 1;
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .footer-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+    
+    /* أنماط الجدول */
+    .table-container {
+      overflow-x: auto;
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      padding: 5px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+    }
+    
+    th, td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid rgba(0, 242, 254, 0.1);
+    }
+    
+    th {
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.2));
+      color: white;
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+    }
+    
+    tr:nth-child(even) {
+      background-color: rgba(50, 50, 50, 0.3);
+    }
+    
+    tr:hover {
+      background-color: rgba(0, 242, 254, 0.05);
+    }
+    
+
+    /* أنماط زر "هل أنت مدرس؟" */
+.teacher-link-container {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.teacher-link {
+  color: #00f2fe;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s;
+  background: rgba(0, 242, 254, 0.1);
+  padding: 8px 20px;
+  border-radius: 30px;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.teacher-link:hover {
+  background: rgba(0, 242, 254, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.2);
+}
+
+.teacher-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: #00f2fe;
+  transition: width 0.3s;
+}
+
+.teacher-link:hover::after {
+  width: 70%;
+}
+    /* أنماط لوحة المدرس */
+    
+    .teacher-panel {
+      background: rgba(30, 30, 30, 0.8);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: none;
+    }
+    
+    .teacher-panel h2 {
+      margin-top: 0;
+      color: #00f2fe;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .teacher-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    
+    /* أنماط تسجيل الدخول */
+    .login-container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 40px;
+      background: rgba(30, 30, 30, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,242,254,0.1) 0%, rgba(0,0,0,0) 70%);
+      z-index: -1;
+      animation: rotate 15s linear infinite;
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .login-container h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #00f2fe;
+      text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+      position: relative;
+    }
+    
+    .login-container h1::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #00f2fe, transparent);
+      margin: 15px auto 0;
+    }
+    
+    .input-field {
+      position: relative;
+      margin-bottom: 25px;
+    }
+    
+    #teacher-password {
+      width: 100%;
+      padding: 15px 45px 15px 15px;
+      background: rgba(40, 40, 40, 0.8);
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    #teacher-password:focus {
+      border-color: #00f2fe;
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+      outline: none;
+    }
+    
+    #toggle-password {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #00f2fe;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.3s;
+    }
+    
+    #toggle-password:hover {
+      color: #4facfe;
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .login-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      justify-content: center;
+    }
+    
+    /* تأثيرات الجسيمات */
+    .particle {
+      position: absolute;
+      background: rgba(0, 242, 254, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* الواتساب و كدا*/
+      .whatsapp-numbers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .whatsapp-btn {
+    background: #25d366;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-family: 'Tajawal', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s;
+  }
+  
+  .whatsapp-btn:hover {
+    background: #128c7e;
+    transform: translateY(-2px);
+  }
+  
+  .whatsapp-popup {
+    background: #1a1a1a !important;
+  }
+  
+  .whatsapp-close {
+    color: #00f2fe !important;
+  }
+  
+  .animated {
+    animation-duration: 0.5s;
+  }
+  
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+ 
+ /* للهواتف المحمولة */
+ 
+/* أنماط شريط البحث الجديدة */
+.search-box {
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.search-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-select {
+  padding: 10px 15px;
+  background: rgba(40, 40, 40, 0.8);
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Tajawal', sans-serif;
+  direction: rtl;
+  min-width: 150px;
+}
+
+#search-input {
+  flex: 1;
+  padding: 10px 15px;
+  background: rgba(40, 40, 40, 0.8);
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Tajawal', sans-serif;
+  direction: rtl;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Tajawal', sans-serif;
+  transition: all 0.3s;
+}
+
+.search-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* تعديلات الجوال */
+@media screen and (max-width: 768px) {
+  .search-controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .search-select, 
+  #search-input, 
+  .search-button {
+    width: 100%;
+    padding: 12px;
+  }
+  
+  .search-select {
+    min-width: 100%;
+  }
+
+
+    
+    .teacher-actions {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .login-container {
+      padding: 20px;
+      margin: 20px auto;
+    }
+    
+    .voltage-header {
+      margin: 5px auto;
+    }
+    
+    .volt-en, .volt-ar {
+      font-size: 1.8rem;
+    }
+    
+    .voltage-ar-above {
+      font-size: 0.9rem;
+      top: -10px;
+    }
+    
+    .teacher-link {
+      font-size: 1rem;
+      padding: 8px 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding: 5px;
+    }
+    
+    .search-container {
+      padding: 8px;
+    }
+    
+    .table-container {
+      margin-left: -5px;
+      margin-right: -5px;
+      width: calc(100% + 10px);
+    }
+    
+    .teacher-panel {
+      padding: 10px;
+    }
+    
+    .login-container {
+      padding: 15px;
+    }
+  }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- شاشة الطالب العادي -->
+    <div id="student-view">
+    <!-- الحقوق و كدا -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="copyright">
+      <p>جميع الحقوق محفوظة © <span id="current-year"></span> - مركز رؤية التعليمي</p>
+      <p>تم التطوير بواسطة: <span class="dev-name">Ziad</span> و <span class="dev-name">Mo2men</span></p>
+    </div>
+    <div class="footer-buttons">
+      <button id="support-btn" class="footer-btn">
+        <i class="fas fa-heart"></i> تدعمنا ؟
+      </button>
+      <button id="contact-support-btn" class="footer-btn">
+        <i class="fab fa-whatsapp"></i> تواصل مع الدعم
+      </button>
+    </div>
+  </div>
+</footer>
+<header>
+  <div class="voltage-header">
+    <div class="volt-en">Volt</div>
+    <div class="volt-ar">ولت</div>
+    <div class="voltage-ar-above">ال</div>
+  </div>
+  <div class="teacher-link-container">
+    <p id="teacher-toggle" class="teacher-link">هل أنت مدرس؟</p>
+  </div>
+</header>
+      <!-- شريط البحث -->
+<div class="new-search-box">
+  <select id="new-search-type" class="new-search-select">
+    <option value="name">بحث بالاسم</option>
+    <option value="score">بحث بالنقاط</option>
+  </select>
+  <div class="new-search-input-container">
+    <input type="text" id="new-search-input" placeholder="اكتب للبحث...">
+    <button id="new-clear-search" class="new-search-button">
+      <i class="fas fa-times"></i> مسح
+    </button>
+  </div>
+</div>
+
+      <!-- جدول البيانات -->
+<!-- استبدال جدول البيانات الحالي بهذا -->
+<div class="table-container">
+  <div class="table-scroll-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>اسم الطالب</th>
+          <th>النقاط</th>
+          <th>التفاصيل</th>
+          <th id="controls-header" style="display:none;">التحكم</th>
+        </tr>
+      </thead>
+      <tbody id="students-table">
+        <!-- سيتم ملؤه بالبيانات -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+      <!-- لوحة المدرس (مخفية في البداية) -->
+      <div id="teacher-panel" class="teacher-panel">
+        <h2>لوحة التحكم للمدرسين</h2>
+        
+        <div class="teacher-actions">
+          <button id="add-student-btn" class="action-button">إضافة طالب</button>
+          <button id="logout-teacher" class="logout-button">تسجيل خروج المدرس</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- شاشة تسجيل المدرس (مخفية في البداية) -->
+    <div id="teacher-login" style="display:none;">
+      <div class="login-container">
+        <h1>تسجيل دخول المدرسين</h1>
+        <div class="input-field">
+          <input type="password" id="teacher-password" placeholder="كلمة المرور" required>
+          <button id="toggle-password">إظهار/إخفاء</button>
+        </div>
+        <div class="login-buttons">
+          <button id="teacher-login-btn" class="main-button">دخول</button>
+          <button id="back-to-student" class="secondary-button">العودة</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <script>
+
+        // الثوابت والإعدادات
+    const TEACHER_PASSWORD_HASH = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"; // هذا تشفير كلمة "password"
+    const apiBaseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8386/api/users' 
+  : window.location.origin + '/api/users';
+    let isTeacher = false;
+
+    // عناصر DOM
+    const elements = {
+      studentView: document.getElementById("student-view"),
+      teacherLogin: document.getElementById("teacher-login"),
+      teacherPanel: document.getElementById("teacher-panel"),
+      teacherToggle: document.getElementById("teacher-toggle"),
+      teacherPassword: document.getElementById("teacher-password"),
+      teacherLoginBtn: document.getElementById("teacher-login-btn"),
+      backToStudent: document.getElementById("back-to-student"),
+      togglePassword: document.getElementById("toggle-password"),
+      addStudentBtn: document.getElementById("add-student-btn"),
+     
+ 
+  newSearchInput: document.getElementById('new-search-input'),
+  newSearchType: document.getElementById('new-search-type'),
+  newClearSearch: document.getElementById('new-clear-search'),
+  // ... باقي العناصر ...
+
+// عناصر DOM الجديدة
+
+
+
+      studentsTable: document.getElementById("students-table"),
+      logoutTeacher: document.getElementById("logout-teacher"),
+      controlsHeader: document.getElementById("controls-header")
+    };
+
+    // تهيئة SweetAlert2 بالوضع الدارك
+    const swalDark = Swal.mixin({
+      background: '#1a1a1a',
+      color: 'white',
+      confirmButtonColor: '#00f2fe',
+      cancelButtonColor: '#ff2e63',
+      iconColor: '#00f2fe',
+      customClass: {
+        container: 'dark-swal-container',
+        popup: 'dark-swal-popup',
+        header: 'dark-swal-header',
+        title: 'dark-swal-title',
+        closeButton: 'dark-swal-close-button',
+        icon: 'dark-swal-icon',
+        image: 'dark-swal-image',
+        content: 'dark-swal-content',
+        input: 'dark-swal-input',
+        actions: 'dark-swal-actions',
+        confirmButton: 'dark-swal-confirm-button',
+        cancelButton: 'dark-swal-cancel-button',
+        footer: 'dark-swal-footer'
+      }
+    });
+
+    // أحداث الصفحة
+    document.addEventListener('DOMContentLoaded', () => {
+    
+elements.newSearchInput.addEventListener('input', function() {
+  const searchTerm = this.value.toLowerCase();
+  const searchType = elements.newSearchType.value;
+  filterStudents(searchTerm, searchType);
+});
+
+elements.newClearSearch.addEventListener('click', function() {
+  elements.newSearchInput.value = '';
+  filterStudents('', 'name');
+});
+
+elements.newSearchType.addEventListener('change', function() {
+  filterStudents(elements.newSearchInput.value.toLowerCase(), this.value);
+});
+
+      // إنشاء جسيمات متحركة
+      createParticles();
+      
+      // تحميل البيانات الأولية
+      loadStudents();
+
+      // أحداث لوحة الطالب
+      elements.teacherToggle.addEventListener('click', showTeacherLogin);
+      elements.newSearchInput.addEventListener('input', function() {
+  const searchTerm = this.value.toLowerCase();
+  const searchType = elements.newSearchType.value;
+  filterStudents(searchTerm, searchType);
+});
+
+elements.newClearSearch.addEventListener('click', function() {
+  elements.newSearchInput.value = '';
+  filterStudents('', 'name');
+});
+
+elements.newSearchType.addEventListener('change', function() {
+  filterStudents(elements.newSearchInput.value.toLowerCase(), this.value);
+});
+
+      // أحداث تسجيل المدرس
+      elements.togglePassword.addEventListener('click', togglePasswordVisibility);
+      elements.teacherLoginBtn.addEventListener('click', handleTeacherLogin);
+      elements.backToStudent.addEventListener('click', backToStudentView);
+      elements.teacherPassword.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleTeacherLogin();
+      });
+
+      // أحداث لوحة المدرس
+      elements.addStudentBtn.addEventListener('click', addStudent);
+      elements.logoutTeacher.addEventListener('click', logoutTeacher);
+    });
+
+    // وظائف التطبيق
+    function togglePasswordVisibility() {
+      const passwordField = elements.teacherPassword;
+      passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+      elements.togglePassword.textContent = passwordField.type === 'password' ? 'إظهار' : 'إخفاء';
+    }
+
+    function showTeacherLogin() {
+      elements.studentView.style.display = 'none';
+      elements.teacherLogin.style.display = 'block';
+    }
+
+    function backToStudentView() {
+      elements.teacherLogin.style.display = 'none';
+      elements.studentView.style.display = 'block';
+    }
+
+    async function handleTeacherLogin() {
+  const password = elements.teacherPassword.value.trim();
+  
+  if (!password) {
+    await swalDark.fire({
+      title: 'خطأ',
+      text: 'يجب إدخال كلمة المرور',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    return;
+  }
+
+  try {
+    const hashedPassword = sha256(password);
+    
+    if (hashedPassword === TEACHER_PASSWORD_HASH) {
+      // تسجيل الدخول الناجح
+      isTeacher = true;
+      elements.teacherLogin.style.display = 'none';
+      elements.studentView.style.display = 'block';
+      elements.teacherPanel.style.display = 'block';
+      elements.teacherToggle.style.display = 'none';
+      elements.controlsHeader.style.display = 'table-cell';
+      elements.teacherPassword.value = '';
+      
+      await swalDark.fire({
+        title: 'نجاح',
+        text: 'تم تسجيل الدخول بنجاح',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      loadStudents();
+    } else {
+      await swalDark.fire({
+        title: 'خطأ',
+        text: 'كلمة المرور غير صحيحة',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  } catch (error) {
+    await swalDark.fire({
+      title: 'خطأ',
+      text: 'حدث خطأ في النظام',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    console.error('Error:', error);
+  }
+}
+    function logoutTeacher() {
+      swalDark.fire({
+        title: 'تسجيل الخروج',
+        text: 'هل أنت متأكد من تسجيل الخروج؟',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'نعم',
+        cancelButtonText: 'إلغاء',
+        confirmButtonColor: '#00f2fe',
+        cancelButtonColor: '#ff2e63'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          isTeacher = false;
+          elements.teacherPanel.style.display = 'none';
+          elements.controlsHeader.style.display = 'none';
+          elements.teacherToggle.style.display = 'block';
+          swalDark.fire({
+            title: 'نجاح',
+            text: 'تم تسجيل الخروج بنجاح',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          loadStudents();
+        }
+      });
+    }
+
+    async function loadStudents() {
+      try {
+        const response = await fetch(apiBaseUrl);
+        const students = await response.json();
+        renderStudentsTable(students);
+      } catch (error) {
+        swalDark.fire({
+          title: 'خطأ',
+          text: 'فشل في تحميل بيانات الطلاب',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        console.error('Error loading students:', error);
+      }
+    }
+
+ // تعديل دالة renderStudentsTable
+function renderStudentsTable(students) {
+  elements.studentsTable.innerHTML = '';
+  
+  if (students.length === 0) {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td colspan="5" style="text-align: center;">لا توجد بيانات متاحة</td>`;
+    elements.studentsTable.appendChild(row);
+    return;
+  }
+  
+  students.forEach((student, index) => {
+    const row = document.createElement('tr');
+    
+    let rowContent = `
+      <td>${index + 1}</td>
+      <td>${student.name}</td>
+      <td class="score-cell">${student.points}<span class="total-separator">/</span>${student.total}</td>
+      <td><a href="details.html?name=${encodeURIComponent(student.name)}" class="view-btn">عرض التفاصيل</a></td>
+    `;
+
+    if (isTeacher) {
+  rowContent += `
+    <td class="actions">
+      <button class="edit-btn" data-id="${student._id}">
+        <i class="fas fa-edit"></i> تعديل
+      </button>
+      <button class="delete-btn" data-id="${student._id}">
+        <i class="fas fa-trash"></i> حذف
+      </button>
+    </td>
+  `;
+}
+    
+    row.innerHTML = rowContent;
+    elements.studentsTable.appendChild(row);
+  });
+
+  // إضافة أحداث للأزرار
+  if (isTeacher) {
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => editStudent(btn.dataset.id));
+    });
+    
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', () => deleteStudent(btn.dataset.id));
+    });
+  }
+}
+async function addStudent() {
+  const { value: name } = await swalDark.fire({
+    title: 'إضافة طالب جديد',
+    input: 'text',
+    inputPlaceholder: 'أدخل اسم الطالب',
+    inputValidator: (value) => {
+      if (!value || !value.trim()) {
+        return 'يجب إدخال اسم الطالب!';
+      }
+      return null;
+    },
+    showCancelButton: true,
+    confirmButtonText: 'إضافة',
+    cancelButtonText: 'إلغاء',
+    confirmButtonColor: '#00f2fe',
+    cancelButtonColor: '#ff2e63'
+  });
+
+  if (!name) return;
+
+  try {
+    const response = await fetch(apiBaseUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name.trim() })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'فشل في إضافة الطالب');
+    }
+
+    await swalDark.fire({
+      title: 'تمت الإضافة',
+      text: `تمت إضافة الطالب "${name}" بنجاح`,
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 1500,
+      background: '#1a1a1a',
+      iconColor: '#00f2fe'
+    });
+
+    loadStudents();
+  } catch (error) {
+    await swalDark.fire({
+      title: 'خطأ',
+      text: error.message || 'حدث خطأ غير متوقع',
+      icon: 'error',
+      confirmButtonText: 'حسناً',
+      background: '#1a1a1a',
+      iconColor: '#ff2e63'
+    });
+    console.error('Error adding student:', error);
+  }
+}
+// تعديل دالة editStudent
+async function editStudent(studentId) {
+  const { value: newName } = await swalDark.fire({
+    title: 'تعديل اسم الطالب',
+    input: 'text',
+    inputPlaceholder: 'ادخل الاسم الجديد',
+    showCancelButton: true,
+    inputValidator: (value) => !value && 'يجب إدخال اسم الطالب'
+  });
+
+  if (newName) {
+    try {
+      const response = await fetch(`${apiBaseUrl}/${studentId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: newName })
+      });
+
+      if (response.ok) {
+        await swalDark.fire({
+          title: 'نجاح',
+          text: 'تم تعديل الطالب بنجاح',
+          icon: 'success',
+          timer: 1500
+        });
+        loadStudents();
+      } else {
+        throw new Error(await response.text());
+      }
+    } catch (error) {
+      await swalDark.fire({
+        title: 'خطأ',
+        text: 'فشل في تعديل الطالب: ' + error.message,
+        icon: 'error',
+        timer: 2000
+      });
+    }
+  }
+}
+
+// تعديل دالة deleteStudent
+async function deleteStudent(studentId) {
+  const { isConfirmed } = await swalDark.fire({
+    title: 'حذف الطالب',
+    text: 'هل أنت متأكد من حذف هذا الطالب؟',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#ff2e63',
+    cancelButtonColor: '#00f2fe'
+  });
+
+  if (isConfirmed) {
+    try {
+      const response = await fetch(`${apiBaseUrl}/${studentId}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        await swalDark.fire({
+          title: 'نجاح',
+          text: 'تم حذف الطالب بنجاح',
+          icon: 'success',
+          timer: 1500
+        });
+        loadStudents();
+      } else {
+        throw new Error(await response.text());
+      }
+    } catch (error) {
+      await swalDark.fire({
+        title: 'خطأ',
+        text: 'فشل في حذف الطالب: ' + error.message,
+        icon: 'error',
+        timer: 2000
+      });
+    }
+  }
+}
+
+// دالة تصفية الطلاب
+function filterStudents(term, type) {
+  const rows = document.querySelectorAll('#students-table tr');
+  
+  rows.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    const name = cells[1]?.textContent.toLowerCase();
+    const score = cells[2]?.textContent.toLowerCase();
+    
+    if (type === 'name') {
+      row.style.display = name.includes(term) ? '' : 'none';
+    } else {
+      row.style.display = score.includes(term) ? '' : 'none';
+    }
+  });
+}
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // تحديث السنة الحالية
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    
+    // أزرار الفوتر
+    document.getElementById('support-btn').addEventListener('click', showSupportMessage);
+    document.getElementById('contact-support-btn').addEventListener('click', openWhatsapp);
+    
+    // دالة رسالة الدعم
+    function showSupportMessage() {
+      swalDark.fire({
+        title: 'دعم المشروع',
+        text: 'احنا مش عاوزين فلوس، ادعيلنا بس ❤️',
+        icon: 'info',
+        confirmButtonText: 'ابشر',
+        confirmButtonColor: '#00f2fe',
+        customClass: {
+          popup: 'animated zoomIn'
+        }
+      });
+    }
+    
+    // دالة فتح الواتساب
+    function openWhatsapp() {
+      // يمكنك إضافة أرقام متعددة هنا
+      const supportNumbers = ['+201283866302', '+201022075802'];
+      
+      swalDark.fire({
+        title: 'اختر رقم للتواصل',
+        html: `
+          <div class="whatsapp-numbers">
+            ${supportNumbers.map((number, index) => `
+              <button class="whatsapp-btn" data-number="${number}">
+                <i class="fab fa-whatsapp"></i> رقم الدعم ${index + 1}
+              </button>
+            `).join('')}
+          </div>
+        `,
+        showConfirmButton: false,
+        showCloseButton: true,
+        customClass: {
+          popup: 'whatsapp-popup',
+          closeButton: 'whatsapp-close'
+        },
+        didOpen: () => {
+          document.querySelectorAll('.whatsapp-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const number = btn.getAttribute('data-number');
+              window.open(`https://wa.me/${number}`, '_blank');
+            });
+          });
+        }
+      });
+    }
+  });
+
+
+    // إنشاء جسيمات متحركة
+    function createParticles() {
+      const container = document.querySelector('.container');
+      if (!container) return;
+      
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // تحديد حجم عشوائي للجسيم
+        const size = Math.random() * 5 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // تحديد موقع عشوائي للجسيم
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        
+        // تحديد شفافية عشوائية
+        particle.style.opacity = Math.random() * 0.5 + 0.1;
+        
+        // تحديد لون الجسيم
+        const colors = ['#00f2fe', '#4facfe', '#ff2e63'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.backgroundColor = color;
+        
+        // تحديد مدة الحركة
+        const duration = Math.random() * 20 + 10;
+        particle.style.animation = `float ${duration}s linear infinite`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        
+        container.appendChild(particle);
+      }
+    }
+
+    // إضافة أنيميشن للجسيمات
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+          opacity: 0.1;
+        }
+        50% {
+          opacity: 0.6;
+        }
+        100% {
+          transform: translate(100px, -100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+  </script>
+</body>
+</html>

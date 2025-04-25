@@ -1,0 +1,378 @@
+/* أنماط أساسية */
+body {
+  font-family: 'Tajawal', sans-serif;
+  background-color: #2b2b2b;
+  color: white;
+  padding: 20px;
+  margin: 0;
+}
+
+/* أنماط الجدول */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #444;
+  color: white; /* لون نص عادي بدون توهج */
+  background-color: rgba(50, 50, 50, 0.8);
+}
+
+th {
+  background-color: #333;
+}
+
+
+
+
+
+
+
+/* أنماط الأزرار الموحدة */
+/* أنماط الأزرار الموحدة */
+.button, button {
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Tajawal', sans-serif;
+  transition: all 0.3s;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  margin: 5px;
+}
+/* أنماط أزرار العرض/التفاصيل */
+.view-btn {
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+  transition: all 0.3s;
+}
+
+.view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+  opacity: 0.9;
+}
+/* زر الإجراءات (إضافة طالب/تعديل/عرض) */
+.action-button, .view-btn, .main-button {
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+}
+
+/* زر الخروج/الحذف */
+.logout-button {
+  background: linear-gradient(135deg, #ff2e63 0%, #ff6b6b 100%);
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(255, 46, 99, 0.3);
+}
+
+/* تأثيرات التحويم */
+.action-button:hover,  .view-btn:hover,
+.logout-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.action-button:hover, .view-btn:hover {
+  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+}
+
+.logout-button:hover {
+  box-shadow: 0 6px 20px rgba(255, 46, 99, 0.4);
+}
+
+/* تعريف .main-button الجديد */
+.main-button {
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+}
+/* زر ثانوي */
+.secondary-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.secondary-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* أنماط الأزرار النصية (مثل details.html) */
+.edit-btn, .delete-btn {
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Tajawal', sans-serif;
+    transition: all 0.3s;
+    border: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 5px;
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    color: white;
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #ff2e63 0%, #ff6b6b 100%);
+    color: white;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+
+
+
+
+
+
+/* أنماط لوحة المدرس */
+.teacher-panel {
+  background-color: #2d2d2d;
+  border: 1px solid #00f2fe;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+/* أنماط جديدة كاملة للبحث */
+.new-search-box {
+  background: rgba(40, 40, 40, 0.9);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 12px;
+  padding: 12px;
+  margin: 0 auto 25px;
+  max-width: 800px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.new-search-select {
+  padding: 12px 16px;
+  background: rgba(50, 50, 50, 0.9);
+  border: 1px solid #00f2fe;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  min-width: 160px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.new-search-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.5);
+}
+
+.new-search-input-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+#new-search-input {
+  width: 100%;
+  padding: 12px 45px 12px 16px;
+  background: rgba(50, 50, 50, 0.9);
+  border: 1px solid #00f2fe;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+#new-search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.5);
+}
+
+.new-search-button {
+  position: absolute;
+  left: 10px;
+  background: transparent;
+  border: none;
+  color: #00f2fe;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s;
+}
+
+.new-search-button:hover {
+  color: #4facfe;
+  transform: scale(1.05);
+}
+
+/* تعديلات الجوال */
+@media (max-width: 768px) {
+  .new-search-box {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+  
+  .new-search-select {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .new-search-input-container {
+    width: 100%;
+  }
+  
+  #new-search-input {
+    padding: 12px 45px 12px 16px;
+  }
+}
+/* للهواتف المحمولة */
+/* تحسينات شاملة للجوال */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  /* تحسين شريط البحث */
+
+  
+  /* تحسين الجدول */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+  }
+  
+  .table-scroll-wrapper {
+    min-width: 600px; /* يجعل الجدول قابل للتمرير الأفقي */
+  }
+  
+  table {
+    font-size: 13px;
+  }
+  
+  th, td {
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+  
+  /* تحسين الأزرار */
+  .button, button {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+  
+  .view-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  
+  /* تحسين لوحة المدرس */
+  .teacher-panel {
+    padding: 15px;
+  }
+  
+  .teacher-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* تحسين تسجيل الدخول */
+  .login-container {
+    padding: 20px;
+    margin: 20px auto;
+  }
+  
+  .login-container h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  #teacher-password {
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .login-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* تحسين العناوين */
+  .voltage-header {
+    margin: 5px auto;
+  }
+  
+  .volt-en, .volt-ar {
+    font-size: 1.8rem;
+  }
+  
+  .voltage-ar-above {
+    font-size: 0.9rem;
+    top: -10px;
+  }
+  
+  .teacher-link {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+}
+
+/* تحسينات إضافية للشاشات الصغيرة جدًا */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 5px;
+  }
+  
+  .search-container {
+    padding: 8px;
+  }
+  
+  .table-container {
+    margin-left: -5px;
+    margin-right: -5px;
+    width: calc(100% + 10px);
+  }
+  
+  .teacher-panel {
+    padding: 10px;
+  }
+  
+  .login-container {
+    padding: 15px;
+  }
+}

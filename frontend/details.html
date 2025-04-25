@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الطالب</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط مطابقة لـ index.html */
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(0, 242, 254, 0.1) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 70%, rgba(79, 172, 254, 0.1) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        /* إخفاء عمود التحكم عندما لا يكون المستخدم مدرساً */
+body:not(.teacher-mode) .controls-cell {
+    display: none;
+}
+
+/* عند وضع المدرس */
+body.teacher-mode .controls-cell {
+    display: table-cell;
+}
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .voltage-header {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            position: relative;
+            margin: 10px auto;
+            width: fit-content;
+            direction: ltr;
+            line-height: 1;
+        }
+        
+        .volt-en {
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            order: 2;
+        }
+        
+        .volt-ar {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            order: 1;
+            margin-left: 5px;
+            padding-top: 0.2rem;
+        }
+        
+        .voltage-ar-above {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(calc(-50% + 15px));
+            font-size: 1.2rem;
+            color: #00f2fe;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: bold;
+        }
+        
+        /* أنماط الجدول */
+        .table-container {
+            overflow-x: auto;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(0, 242, 254, 0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.2));
+            color: white;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(50, 50, 50, 0.3);
+        }
+        
+        tr:hover {
+            background-color: rgba(0, 242, 254, 0.05);
+        }
+        
+        /* أنماط زر "هل أنت مدرس؟" */
+        .teacher-link-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .teacher-link {
+            color: #00f2fe;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s;
+            background: rgba(0, 242, 254, 0.1);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+        
+        .teacher-link:hover {
+            background: rgba(0, 242, 254, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.2);
+        }
+        
+        .teacher-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: #00f2fe;
+            transition: width 0.3s;
+        }
+        
+        .teacher-link:hover::after {
+            width: 70%;
+        }
+        
+        /* أنماط لوحة المدرس */
+        .teacher-panel {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+        
+        .teacher-panel h2 {
+            margin-top: 0;
+            color: #00f2fe;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .teacher-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        /* أنماط الأزرار الموحدة */
+        .button, button {
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+            border: none;
+            font-size: 15px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            margin: 5px;
+        }
+        
+        /* زر الإجراءات (إضافة طالب/تعديل/عرض) */
+        .action-button, .edit-btn, .view-btn, .main-button {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: white !important;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+        }
+        
+        /* زر الخروج/الحذف */
+        .logout-button, .delete-btn {
+            background: linear-gradient(135deg, #ff2e63 0%, #ff6b6b 100%);
+            color: white !important;
+            box-shadow: 0 4px 15px rgba(255, 46, 99, 0.3);
+        }
+        
+        /* تأثيرات التحويم */
+        .action-button:hover, .edit-btn:hover, .view-btn:hover,
+        .logout-button:hover, .delete-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        .action-button:hover, .edit-btn:hover, .view-btn:hover {
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+        }
+        
+        .logout-button:hover, .delete-btn:hover {
+            box-shadow: 0 6px 20px rgba(255, 46, 99, 0.4);
+        }
+        
+        /* زر ثانوي */
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* أنماط تسجيل الدخول */
+        .login-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 40px;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,242,254,0.1) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            animation: rotate 15s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .login-container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: #00f2fe;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+            position: relative;
+        }
+        
+        .login-container h1::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #00f2fe, transparent);
+            margin: 15px auto 0;
+        }
+        
+        .input-field {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        #teacher-password {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            background: rgba(40, 40, 40, 0.8);
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        #teacher-password:focus {
+            border-color: #00f2fe;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+            outline: none;
+        }
+        
+        #toggle-password {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #00f2fe;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        #toggle-password:hover {
+            color: #4facfe;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .login-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        /* تأثيرات الجسيمات */
+        .particle {
+            position: absolute;
+            background: rgba(0, 242, 254, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(100px, -100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* للهواتف المحمولة */
+        @media (max-width: 768px) {
+            .voltage-header {
+                margin: 5px auto;
+            }
+            
+            .volt-en, .volt-ar {
+                font-size: 1.8rem;
+                padding-top: 0.1rem;
+            }
+            
+            .voltage-ar-above {
+                font-size: 0.9rem;
+                top: -10px;
+                transform: translateX(calc(-50% + 10px));
+            }
+            
+            .teacher-link {
+                font-size: 1rem;
+                padding: 6px 12px;
+            }
+            
+            .teacher-actions {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .login-container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .table-container {
+                margin-left: -5px;
+                margin-right: -5px;
+                width: calc(100% + 10px);
+            }
+            
+            .teacher-panel {
+                padding: 10px;
+            }
+            
+            .login-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- شاشة الطالب -->
+        <div id="student-view">
+            <header>
+                <div class="voltage-header">
+                    <div class="volt-en">Volt</div>
+                    <div class="volt-ar">ولت</div>
+                    <div class="voltage-ar-above">ال</div>
+                </div>
+                <div class="teacher-link-container">
+                    <p id="teacher-toggle" class="teacher-link">هل أنت مدرس؟</p>
+                </div>
+            </header>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>الاختبار</th>
+                <th>النقاط</th>
+                <th>الإجمالي</th>
+                <th>النسبة</th>
+                <th class="controls-cell" style="display: none;">التحكم</th>
+            </tr>
+        </thead>
+        <tbody id="details-table">
+            <!-- سيتم ملؤه بالبيانات -->
+        </tbody>
+    </table>
+</div>
+
+            <div id="teacher-panel" class="teacher-panel">
+                <h2>لوحة التحكم للمدرسين</h2>
+                <div class="teacher-actions">
+                    <button id="add-detail-btn" class="action-button">إضافة تفاصيل جديدة</button>
+                    <button id="logout-teacher" class="logout-button">تسجيل خروج المدرس</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- شاشة تسجيل المدرس -->
+        <div id="teacher-login" style="display:none;">
+            <div class="login-container">
+                <h1>تسجيل دخول المدرسين</h1>
+                <div class="input-field">
+                    <input type="password" id="teacher-password" placeholder="كلمة المرور" required>
+                    <button id="toggle-password">إظهار/إخفاء</button>
+                </div>
+                <div class="login-buttons">
+                    <button id="teacher-login-btn" class="main-button">دخول</button>
+                    <button id="back-to-student" class="secondary-button">العودة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+  
+  <script>
+
+     const TEACHER_PASSWORD_HASH = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
+// تحديد رابط API تلقائياً بناء على الموقع الحالي
+const currentUrl = window.location.href;
+let apiBaseUrl;
+
+if (currentUrl.includes('localhost') || currentUrl.includes('127.0.0.1')) {
+  // إذا كنا في بيئة التطوير المحلي
+  apiBaseUrl = 'http://localhost:8386/api/users';
+} else {
+  // إذا كنا في بيئة الإنتاج
+  const baseUrl = window.location.origin;
+  apiBaseUrl = `${baseUrl}/api/users`;
+}
+
+console.log('API Base URL:', apiBaseUrl); // للتأكد من صحة الرابط
+        let isTeacher = false;
+        // عناصر DOM
+        const elements = {
+            studentView: document.getElementById("student-view"),
+            teacherLogin: document.getElementById("teacher-login"),
+            teacherPanel: document.getElementById("teacher-panel"),
+            teacherToggle: document.getElementById("teacher-toggle"),
+            teacherPassword: document.getElementById("teacher-password"),
+            teacherLoginBtn: document.getElementById("teacher-login-btn"),
+            backToStudent: document.getElementById("back-to-student"),
+            togglePassword: document.getElementById("toggle-password"),
+            addDetailBtn: document.getElementById("add-detail-btn"),
+            logoutTeacher: document.getElementById("logout-teacher"),
+            detailsTable: document.getElementById("details-table")
+        };
+
+        
+        let currentUserName = "";
+
+        // تهيئة SweetAlert2 بالوضع الدارك
+        const swalDark = Swal.mixin({
+            background: '#1a1a1a',
+            color: 'white',
+            confirmButtonColor: '#00f2fe',
+            cancelButtonColor: '#ff2e63',
+            iconColor: '#00f2fe',
+            customClass: {
+                container: 'dark-swal-container',
+                popup: 'dark-swal-popup',
+                header: 'dark-swal-header',
+                title: 'dark-swal-title',
+                closeButton: 'dark-swal-close-button',
+                icon: 'dark-swal-icon',
+                image: 'dark-swal-image',
+                content: 'dark-swal-content',
+                input: 'dark-swal-input',
+                actions: 'dark-swal-actions',
+                confirmButton: 'dark-swal-confirm-button',
+                cancelButton: 'dark-swal-cancel-button',
+                footer: 'dark-swal-footer'
+            }
+        });
+
+        // أحداث الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            // إنشاء جسيمات متحركة
+            createParticles();
+            
+            currentUserName = new URLSearchParams(window.location.search).get("name");
+            
+            // تحميل حالة المعلم من localStorage
+            if (isTeacher) {
+                elements.teacherPanel.style.display = 'block';
+                elements.teacherToggle.style.display = 'none';
+                document.querySelectorAll('.controls-cell').forEach(el => {
+                    el.style.display = 'table-cell';
+                });
+            }
+            
+            loadDetails();
+            
+            // إعداد الأحداث
+            elements.teacherToggle.addEventListener('click', showTeacherLogin);
+            elements.teacherLoginBtn.addEventListener('click', handleTeacherLogin);
+            elements.backToStudent.addEventListener('click', backToStudentView);
+            elements.togglePassword.addEventListener('click', togglePasswordVisibility);
+            elements.addDetailBtn.addEventListener('click', showAddDetailForm);
+            elements.logoutTeacher.addEventListener('click', logoutTeacher);
+        });
+
+        // ============= وظائف التحكم =============
+        function togglePasswordVisibility() {
+            const passwordField = elements.teacherPassword;
+            passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+            elements.togglePassword.textContent = passwordField.type === 'password' ? 'إظهار' : 'إخفاء';
+        }
+
+        function showTeacherLogin() {
+            elements.studentView.style.display = 'none';
+            elements.teacherLogin.style.display = 'block';
+        }
+
+        function backToStudentView() {
+            elements.teacherLogin.style.display = 'none';
+            elements.studentView.style.display = 'block';
+        }
+
+        async function handleTeacherLogin() {
+            const password = elements.teacherPassword.value.trim();
+            
+            if (!password) {
+                await swalDark.fire({
+                    title: 'خطأ',
+                    text: 'يجب إدخال كلمة المرور',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return;
+            }
+
+            try {
+                const hashedPassword = sha256(password);
+                
+                if (hashedPassword === TEACHER_PASSWORD_HASH) {
+                    // تسجيل الدخول الناجح
+                    isTeacher = true;
+                    document.body.classList.add('teacher-mode');
+                    elements.teacherLogin.style.display = 'none';
+                    elements.studentView.style.display = 'block';
+                    elements.teacherPanel.style.display = 'block';
+                    elements.teacherToggle.style.display = 'none';
+                    document.querySelectorAll('.controls-cell').forEach(el => {
+                        el.style.display = 'table-cell';
+                    });
+                    elements.teacherPassword.value = '';
+                    
+                    await swalDark.fire({
+                        title: 'نجاح',
+                        text: 'تم تسجيل الدخول بنجاح',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    loadDetails();
+                } else {
+                    await swalDark.fire({
+                        title: 'خطأ',
+                        text: 'كلمة المرور غير صحيحة',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            } catch (error) {
+                await swalDark.fire({
+                    title: 'خطأ',
+                    text: 'حدث خطأ في النظام',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                console.error('Error:', error);
+            }
+        }
+
+        function logoutTeacher() {
+            swalDark.fire({
+                title: 'تسجيل الخروج',
+                text: 'هل أنت متأكد من تسجيل الخروج؟',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'نعم',
+                cancelButtonText: 'إلغاء',
+                confirmButtonColor: '#00f2fe',
+                cancelButtonColor: '#ff2e63'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    isTeacher = false;
+                    document.body.classList.remove('teacher-mode');
+                    elements.teacherPanel.style.display = 'none';
+                    elements.teacherToggle.style.display = 'block';
+                    document.querySelectorAll('.controls-cell').forEach(el => {
+                        el.style.display = 'none';
+                    });
+                    
+                    swalDark.fire({
+                        title: 'نجاح',
+                        text: 'تم تسجيل الخروج بنجاح',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    
+                    loadDetails();
+                }
+            });
+        }
+
+        // ============= وظائف البيانات =============
+        // ============= دوال إدارة البيانات =============
+
+async function loadDetails() {
+    try {
+        if (!currentUserName) {
+            throw new Error('اسم الطالب غير محدد');
+        }
+
+        const response = await fetch(`${apiBaseUrl}/name/${encodeURIComponent(currentUserName)}`);
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'فشل في جلب البيانات');
+        }
+        
+        const user = await response.json();
+        currentUserId = user._id; // حفظ ID الطالب لاستخدامه في العمليات الأخرى
+        
+        renderDetailsTable(user);
+    } catch (error) {
+        console.error('Error loading details:', error);
+        await swalDark.fire({
+            title: 'خطأ',
+            text: 'فشل في تحميل التفاصيل: ' + error.message,
+            icon: 'error',
+            confirmButtonText: 'حسناً'
+        });
+    }
+}
+function renderDetailsTable(user) {
+    elements.detailsTable.innerHTML = '';
+    
+    if (!user.details || user.details.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td colspan="6" style="text-align: center;">
+                لا توجد تفاصيل متاحة لهذا الطالب
+            </td>
+        `;
+        elements.detailsTable.appendChild(row);
+        return;
+    }
+    
+    // ترتيب التفاصيل من الأحدث إلى الأقدم
+    const sortedDetails = [...user.details].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
+    sortedDetails.forEach(detail => {
+        const percentage = Math.round((detail.points / detail.total) * 100);
+        const row = document.createElement('tr');
+        
+        row.innerHTML = `
+        <td>${user.name}</td>
+        <td>${detail.exam}</td>
+        <td>${detail.points}</td>
+        <td>${detail.total}</td>
+        <td>${percentage}%</td>
+        <td class="controls-cell" style="display: ${isTeacher ? 'table-cell' : 'none'}">
+            ${isTeacher ? `
+            <button class="edit-btn" data-detail-id="${detail._id}">
+                <i class="fas fa-edit"></i> تعديل
+            </button>
+            <button class="delete-btn" data-detail-id="${detail._id}">
+                <i class="fas fa-trash"></i> حذف
+            </button>
+            ` : ''}
+        </td>
+    `;
+        
+        elements.detailsTable.appendChild(row);
+    });
+
+    // إضافة معالجات الأحداث للأزرار
+    if (isTeacher) {
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', () => showEditDetailForm(btn.dataset.detailId));
+        });
+        
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', () => confirmDeleteDetail(btn.dataset.detailId));
+        });
+    }
+}
+async function showAddDetailForm() {
+    if (!isTeacher) return;
+    
+    const { value: formValues } = await swalDark.fire({
+        title: 'إضافة تفاصيل اختبار جديد',
+        html: `
+            <div class="swal2-input-container">
+                <input id="swal-exam" class="swal2-input" placeholder="اسم الاختبار" required>
+            </div>
+            <div class="swal2-input-container">
+                <input id="swal-points" class="swal2-input" 
+                       placeholder="النقاط" type="number" min="0" required>
+            </div>
+            <div class="swal2-input-container">
+                <input id="swal-total" class="swal2-input" 
+                       placeholder="الإجمالي" type="number" min="1" required>
+            </div>
+        `,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'حفظ',
+        cancelButtonText: 'إلغاء',
+        preConfirm: () => {
+            const exam = document.getElementById('swal-exam').value.trim();
+            const points = parseInt(document.getElementById('swal-points').value);
+            const total = parseInt(document.getElementById('swal-total').value);
+            
+            if (!exam) {
+                Swal.showValidationMessage('اسم الاختبار مطلوب');
+                return false;
+            }
+            
+            if (isNaN(points) || points < 0) {
+                Swal.showValidationMessage('يجب أن تكون النقاط رقمًا موجبًا');
+                return false;
+            }
+            
+            if (isNaN(total) || total < 1) {
+                Swal.showValidationMessage('يجب أن يكون الإجمالي رقمًا أكبر من الصفر');
+                return false;
+            }
+            
+            if (points > total) {
+                Swal.showValidationMessage('النقاط لا يمكن أن تكون أكثر من الإجمالي');
+                return false;
+            }
+            
+            return { exam, points, total };
+        }
+    });
+
+    if (formValues) {
+        try {
+            const response = await fetch(`${apiBaseUrl}/name/${currentUserName}/details`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formValues)
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'فشل في إضافة التفاصيل');
+            }
+            
+            await swalDark.fire({
+                title: 'تمت الإضافة',
+                text: 'تمت إضافة تفاصيل الاختبار بنجاح',
+                icon: 'success',
+                timer: 1500
+            });
+            
+            await loadDetails();
+        } catch (error) {
+            await swalDark.fire({
+                title: 'خطأ',
+                text: error.message,
+                icon: 'error'
+            });
+        }
+    }
+}
+
+async function showEditDetailForm(detailId) {
+    if (!isTeacher || !detailId) return;
+    
+    try {
+        // جلب البيانات الحالية أولاً
+        const response = await fetch(`${apiBaseUrl}/name/${currentUserName}`);
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'فشل في جلب البيانات');
+        }
+        
+        const user = await response.json();
+        const detail = user.details.find(d => d._id === detailId);
+        
+        if (!detail) {
+            throw new Error('تفاصيل الاختبار غير موجودة');
+        }
+        
+        const { value: formValues } = await swalDark.fire({
+            title: 'تعديل تفاصيل الاختبار',
+            html: `
+                <div class="swal2-input-container">
+                    <input id="swal-exam" class="swal2-input" 
+                           value="${detail.exam}" placeholder="اسم الاختبار" required>
+                </div>
+                <div class="swal2-input-container">
+                    <input id="swal-points" class="swal2-input" 
+                           value="${detail.points}" placeholder="النقاط" type="number" min="0" required>
+                </div>
+                <div class="swal2-input-container">
+                    <input id="swal-total" class="swal2-input" 
+                           value="${detail.total}" placeholder="الإجمالي" type="number" min="1" required>
+                </div>
+            `,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: 'حفظ التغييرات',
+            cancelButtonText: 'إلغاء',
+            preConfirm: () => {
+                const exam = document.getElementById('swal-exam').value.trim();
+                const points = parseInt(document.getElementById('swal-points').value);
+                const total = parseInt(document.getElementById('swal-total').value);
+                
+                if (!exam) {
+                    Swal.showValidationMessage('اسم الاختبار مطلوب');
+                    return false;
+                }
+                
+                if (isNaN(points) || points < 0) {
+                    Swal.showValidationMessage('يجب أن تكون النقاط رقمًا موجبًا');
+                    return false;
+                }
+                
+                if (isNaN(total) || total < 1) {
+                    Swal.showValidationMessage('يجب أن يكون الإجمالي رقمًا أكبر من الصفر');
+                    return false;
+                }
+                
+                if (points > total) {
+                    Swal.showValidationMessage('النقاط لا يمكن أن تكون أكثر من الإجمالي');
+                    return false;
+                }
+                
+                return { exam, points, total };
+            }
+        });
+        
+        if (formValues) {
+            const updateResponse = await fetch(`${apiBaseUrl}/name/${currentUserName}/details/${detailId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formValues)
+            });
+            
+            if (!updateResponse.ok) {
+                const errorData = await updateResponse.json();
+                throw new Error(errorData.message || 'فشل في تحديث التفاصيل');
+            }
+            
+            await swalDark.fire({
+                title: 'تم التحديث',
+                text: 'تم تعديل تفاصيل الاختبار بنجاح',
+                icon: 'success',
+                timer: 1500
+            });
+            
+            await loadDetails();
+        }
+    } catch (error) {
+        await swalDark.fire({
+            title: 'خطأ',
+            text: error.message,
+            icon: 'error'
+        });
+    }
+}
+
+async function confirmDeleteDetail(detailId) {
+    if (!isTeacher || !detailId) return;
+    
+    const { isConfirmed } = await swalDark.fire({
+        title: 'تأكيد الحذف',
+        text: 'هل أنت متأكد من حذف تفاصيل هذا الاختبار؟ لا يمكن التراجع عن هذه العملية',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ff2e63',
+        cancelButtonColor: '#00f2fe',
+        confirmButtonText: 'نعم، احذف',
+        cancelButtonText: 'إلغاء'
+    });
+    
+    if (!isConfirmed) return;
+    
+    try {
+        const response = await fetch(`${apiBaseUrl}/name/${currentUserName}/details/${detailId}`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'فشل في حذف التفاصيل');
+        }
+        
+        await swalDark.fire({
+            title: 'تم الحذف',
+            text: 'تم حذف تفاصيل الاختبار بنجاح',
+            icon: 'success',
+            timer: 1500
+        });
+        
+        await loadDetails();
+    } catch (error) {
+        await swalDark.fire({
+            title: 'خطأ',
+            text: error.message,
+            icon: 'error'
+        });
+    }
+}
+        // إنشاء جسيمات متحركة
+        function createParticles() {
+            const container = document.querySelector('.container');
+            if (!container) return;
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // تحديد حجم عشوائي للجسيم
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // تحديد موقع عشوائي للجسيم
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // تحديد شفافية عشوائية
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                // تحديد لون الجسيم
+                const colors = ['#00f2fe', '#4facfe', '#ff2e63'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.backgroundColor = color;
+                
+                // تحديد مدة الحركة
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s linear infinite`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+  </script>
+</body>
+</html>
